@@ -1,0 +1,126 @@
+#import "/lib.typ": *
+
+//
+// Other packages used:
+//
+
+#import "@preview/glossarium:0.5.9": gls, glspl, make-glossary, print-glossary
+#import "@preview/codly:1.3.0": *
+
+#let epigraph = [
+  "The problem with object-oriented languages is they’ve got all this implicit \
+  environment that they carry around with them. You wanted a banana but \
+  what you got was a gorilla holding the banana and the entire jungle." \
+  --- Joe Armstrong
+]
+
+#let abstract = [#lorem(150)]
+#let acknowledgements = [#lorem(150)]
+#let appendix = [
+  = Appendices
+  #include "./template/chapters/appendix.typ"
+]
+
+// Put your abbreviations/acronyms here.
+// 'key' is what you will reference in the typst code
+// 'short' is the abbreviation (what will be shown in the pdf on all references except the first)
+// 'long' is the full acronym expansion (what will be shown in the first reference of the document)
+#let abbreviations = (
+  (
+    key: "gc",
+    short: "GC",
+    long: "Garbage Collection",
+  ),
+  (
+    key: "uit",
+    short: "UiT",
+    long: "University of Tromsø – The Arctic University of Norway",
+  ),
+  (
+    key: "cow",
+    short: "COW",
+    long: "Copy on Write",
+  ),
+  (
+    key: "cpu",
+    short: "CPU",
+    long: "Central Processing Unit",
+  ),
+)
+
+#show: thesis.with(
+  author: "<author>",
+  title: "<title>",
+  degree: "<degree>",
+  faculty: "<faculty>",
+  department: "<department>",
+  major: "<major>",
+  supervisors: (
+    (
+      title: "Main Supervisor",
+      name: "Navn Navnesen",
+      affiliation: [UiT The Arctic University of Norway, \
+        Faculty of Science and Technology, \
+        Department of Computer Science
+      ],
+    ),
+    (
+      title: "External Supervisor",
+      name: "Kari Nordmann",
+      affiliation: [External Company A/S],
+    ),
+  ),
+  epigraph: epigraph,
+  abstract: abstract,
+  appendix: appendix,
+  acknowledgements: acknowledgements,
+  preface: none,
+  figure-index: true,
+  table-index: true,
+  listing-index: true,
+  abbreviations: abbreviations,
+  date: datetime(year: 2025, month: 6, day: 1),
+  bibliography: bibliography("./template/refs.bib", title: "Bibliography", style: "ieee"),
+)
+
+// Code blocks
+#codly(
+  languages: (
+    rust: (
+      name: "Rust",
+      color: rgb("#CE412B"),
+    ),
+    // NOTE: Hacky, but 'fs' doesn't syntax highlight
+    fsi: (
+      name: "F#",
+      color: rgb("#6a0dad"),
+    ),
+  ),
+)
+
+// If you wish to use lining figures rather than old-style figures, uncomment this line.
+// #set text(number-type: "lining")
+
+// Include as many chapters as you like.
+
+= Introduction <chp:introduction>
+#include "./template/chapters/introduction.typ"
+// NOTE:
+// It's important to have explicit pagebreaks between each chapter,
+// otherwise header stylings from the template might break
+#pagebreak()
+
+= Basic Usage <chp:basic_usage>
+#include "./template/chapters/basic-usage.typ"
+#pagebreak()
+
+= Figures <chp:figures>
+#include "./template/chapters/figures.typ"
+#pagebreak()
+
+= Typst Basics <chp:typst_basics>
+#include "./template/chapters/typst-basics.typ"
+#pagebreak()
+
+= Utilities <chp:utilities>
+#include "./template/chapters/utilities.typ"

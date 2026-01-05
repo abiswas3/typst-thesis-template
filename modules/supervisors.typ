@@ -1,5 +1,5 @@
 #let supervisors-page(supervisors) = {
-  pagebreak(weak: true, to: "even")
+  // pagebreak(weak: true, to: "even")
 
   // Apply styling to supervisor content
   let supervisors-content = supervisors.map(s => {
@@ -34,7 +34,7 @@
       #text(
         14pt,
         weight: "bold",
-        font: ("Open Sans", "Noto Sans"),
+        // font: ("Open Sans", "Noto Sans"),
         "Supervisors",
       )
       #grid(

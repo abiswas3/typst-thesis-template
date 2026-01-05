@@ -111,17 +111,17 @@
     footer: context {
       let page-number = here().page()
       let chapters = heading.where(level: 1)
-      if query(chapters).any(it => it.location().page() == here().page()) {
+      // if query(chapters).any(it => it.location().page() == here().page()) {
         align(center, text(
           weight: "thin",
-          font: ("Open Sans", "Noto Sans"),
+          // font: ("Open Sans", "Noto Sans"),
           size: 8pt,
           fill: uit-gray-color,
           counter(page).display(),
         ))
-      } else {
-        none
-      }
+      // } else {
+        // none
+      // }
     },
     header: context {
       // Get current page number
@@ -155,7 +155,7 @@
         }
         text(
           weight: "thin",
-          font: ("Open Sans", "Noto Sans"),
+          // font: ("Open Sans", "Noto Sans"),
           size: 8pt,
           fill: uit-gray-color,
           fill-line(left-text, right-text),
@@ -174,129 +174,130 @@
 
 // Common styles for main matter
 #let main-matter(body) = {
-  set text(number-type: "old-style")
+  set text(font: "New Computer Modern", size: 12pt)
   set page(
     numbering: "1",
     // Only show numbering in footer when no chapter header is present
     footer: context {
       let chapters = heading.where(level: 1)
-      if query(chapters).any(it => it.location().page() == here().page()) {
         align(center, text(
-          weight: "thin",
-          font: ("Open Sans", "Noto Sans"),
+          // weight: "thin",
           size: 8pt,
           fill: uit-gray-color,
           counter(page).display(),
         ))
-      } else {
-        none
-      }
     },
     // Set page header
     header-ascent: 30%,
-    header: context {
-      // Get current page number
-      let page-number = here().page()
-
-      // If the current page is the start of a chapter, don't show a header
-      let chapters = heading.where(level: 1)
-      let is-start-chapter = query(chapters).any(it => (
-        it.location().page() == page-number
-      ))
-      if is-start-chapter {
-        return []
-      }
-      if not state("content.switch", false).get() and not is-start-chapter {
-        return
-      }
-
-      // Find the chapter of the section we are currently in
-      let chapters-before = query(chapters.before(here()))
-      if chapters-before.len() > 0 {
-        let current-chapter = chapters-before.last()
-
-
-        // If a new subsecion starts on this page, select that subsection.
-        // Otherwise, select the last subsection
-        let current-subsection = {
-          let subsections = heading.where(level: 2)
-          let subsections-after = query(subsections.after(here()))
-
-          if subsections-after.len() > 0 {
-            let next-subsection = subsections-after.first()
-
-            if next-subsection.location().page() == page-number {
-              (next-subsection)
-            } else {
-              let subsections-before = query(subsections.before(here()))
-
-              if subsections-before.len() > 0 {
-                (subsections-before.last())
-              } else {
-                // No subsections in this chapter
-                none
-              }
-            }
-          }
-        }
-
-        let colored-slash = text(fill: uit-teal-color, "/")
-        let spacing = h(3pt)
-
-        // Content to display subsection count and heading
-        let subsection-text = if current-subsection != none {
-          let subsection-numbering = current-subsection.numbering
-          let location = current-subsection.location()
-          let subsection-count = numbering(
-            subsection-numbering,
-            ..counter(
-              heading,
-            ).at(location),
-          )
-
-          [#subsection-count #spacing #colored-slash #spacing #current-subsection.body]
-        } else {
-          // No subsections in chapter, display nothing
-          []
-        }
-
-        // Content to display chapter count and heading
-        let chapter-text = {
-          let chapter-title = current-chapter.body
-          let chapter-number = counter(heading.where(level: 1)).display()
-          let prefix = if in-appendix.get() { [APPENDIX] } else { [CHAPTER] }
-
-          [#prefix #chapter-number #spacing #colored-slash #spacing #chapter-title]
-        }
-
-        if current-chapter.numbering != none {
-          // Show current chapter on odd pages, current subsection on even
-          let (left-text, right-text) = if calc.odd(page-number) {
-            (counter(page).display(), chapter-text)
-          } else {
-            (
-              subsection-text,
-              counter(page).display(),
-            )
-          }
-          text(
-            weight: "thin",
-            font: ("Open Sans", "Noto Sans"),
-            size: 8pt,
-            fill: uit-gray-color,
-            fill-line(upper(left-text), upper(right-text)),
-          )
-        }
-      }
-    },
+    // header: context {
+    //   // Get current page number
+    //   let page-number = here().page()
+    //
+    //   // If the current page is the start of a chapter, don't show a header
+    //   let chapters = heading.where(level: 1)
+    //   let is-start-chapter = query(chapters).any(it => (
+    //     it.location().page() == page-number
+    //   ))
+    //   if is-start-chapter {
+    //     return []
+    //   }
+    //   // if not state("content.switch", false).get() and not is-start-chapter {
+    //   //   return
+    //   // }
+    //   //
+    //   // Find the chapter of the section we are currently in
+    //   let chapters-before = query(chapters.before(here()))
+    //   if chapters-before.len() > 0 {
+    //     let current-chapter = chapters-before.last()
+    //
+    //
+    //     // If a new subsecion starts on this page, select that subsection.
+    //     // Otherwise, select the last subsection
+    //     let current-subsection = {
+    //       let subsections = heading.where(level: 2)
+    //       let subsections-after = query(subsections.after(here()))
+    //
+    //       if subsections-after.len() > 0 {
+    //         let next-subsection = subsections-after.first()
+    //
+    //         if next-subsection.location().page() == page-number {
+    //           (next-subsection)
+    //         } else {
+    //           let subsections-before = query(subsections.before(here()))
+    //
+    //           if subsections-before.len() > 0 {
+    //             (subsections-before.last())
+    //           } else {
+    //             // No subsections in this chapter
+    //             none
+    //           }
+    //         }
+    //       }
+    //     }
+    //
+    //     let colored-slash = text(fill: uit-teal-color, "/")
+    //     let spacing = h(3pt)
+    //
+    //     // Content to display subsection count and heading
+    //     let subsection-text = if current-subsection != none {
+    //       let subsection-numbering = current-subsection.numbering
+    //       let location = current-subsection.location()
+    //       let subsection-count = numbering(
+    //         subsection-numbering,
+    //         ..counter(
+    //           heading,
+    //         ).at(location),
+    //       )
+    //
+    //       [#subsection-count #spacing #colored-slash #spacing #current-subsection.body]
+    //     } else {
+    //       // No subsections in chapter, display nothing
+    //       []
+    //     }
+    //
+    //     // Content to display chapter count and heading
+    //     let chapter-text = {
+    //       let chapter-title = current-chapter.body
+    //       let chapter-number = counter(heading.where(level: 1)).display()
+    //       let prefix = if in-appendix.get() { [APPENDIX] } else { [CHAPTER] }
+    //
+    //       [#prefix #chapter-number #spacing #colored-slash #spacing #chapter-title]
+    //     }
+    //
+    //     // if current-chapter.numbering != none {
+    //     //   // Show current chapter on odd pages, current subsection on even
+    //     //   let (left-text, right-text) = if calc.odd(page-number) {
+    //     //     (counter(page).display(), chapter-text)
+    //     //   } else {
+    //     //     (
+    //     //       subsection-text,
+    //     //       counter(page).display(),
+    //     //     )
+    //     //   }
+    //     //   text(
+    //     //     weight: "thin",
+    //     //     // font: ("Open Sans", "Noto Sans"),
+    //     //     size: 8pt,
+    //     //     fill: uit-gray-color,
+    //     //     fill-line(upper(left-text), upper(right-text)),
+    //     //   )
+    //     // }
+    //   }
+    // },
   )
-  counter(page).update(0)
+  counter(page).update(1)
   counter(heading).update(0)
-  set heading(numbering: "1.1")
-  show heading.where(level: 1): it => {
-    it
-    v(12%, weak: true)
-  }
+  set heading(numbering: "1.1.1")
+  // show heading.where(level: 1): it => {
+  //   it
+  //   v(12%, weak: true)
+  // }
+  // set par(leading: 1.3em)
+  let leading = 1.5em
+  let leading = leading - 0.75em // "Normalization"
+  set block(spacing: leading)
+  set par(spacing: leading)
+  set par(leading: leading)
   body
 }
 
@@ -373,6 +374,7 @@
   // The content of your work.
   body,
 ) = {
+
   // Set the document's metadata.
   set document(title: title, author: author, date: if date != none {
     date
@@ -431,21 +433,21 @@
 
   // Set the body font.
   // Default is XCharter at 11pt
-  set text(font: ("XCharter", "Charter"), size: 11pt)
+  // set text(font: ("XCharter", "Charter"), size: 11pt)
 
   // Set raw text font.
   // Default is JetBrains Mono at 9tp with DejaVu Sans Mono as fallback
-  show raw: set text(font: ("JetBrains Mono", "DejaVu Sans Mono"), size: 9pt)
+  // show raw: set text(font: ("JetBrains Mono", "DejaVu Sans Mono"), size: 9pt)
 
   // Configure page size and margins.
   set page(
     paper: "a4",
-    margin: (
-      bottom: 5cm,
-      top: 42mm,
-      inside: 33.0mm,
-      outside: 45mm,
-    ),
+    // margin: (
+    //   bottom: 5cm,
+    //   top: 42mm,
+    //   inside: 33.0mm,
+    //   outside: 45mm,
+    // ),
     numbering: "1",
     number-align: center,
   )
@@ -486,9 +488,9 @@
   show heading.where(level: 1): it => {
     state("content.switch").update(false)
     // Start chapter headings on a new, odd-numbered page
-    pagebreak(weak: true, to: "odd")
+    // pagebreak(weak: true, to: "odd")
     state("content.switch").update(true)
-    set text(font: ("Open Sans", "Noto Sans"), weight: "bold", size: 24pt)
+    // set text(font: ("Open Sans", "Noto Sans"), weight: "bold", size: 24pt)
 
     let heading-number = if heading.numbering == none {
       []
@@ -532,20 +534,18 @@
   // Configure heading numbering.
   set heading(numbering: "1.1")
 
-
   // Do not hyphenate headings.
   show heading: set text(
-    font: ("Open Sans", "Noto Sans"),
+    // font: ("Open Sans", "Noto Sans"),lib
     weight: "bold",
     hyphenate: false,
   )
-
 
   // -- Equations --
 
   // Configure equation numbering.
   set math.equation(numbering: n => {
-    set text(font: ("XCharter", "Charter"))
+    // set text(font: ("XCharter", "Charter"))
     let h1 = counter(heading).get().first()
     numbering("(1.1)", h1, n)
   })
@@ -614,7 +614,6 @@
   show: thmrules.with(qed-symbol: $qed$)
 
   // -- Lists --
-
   let list-spacing = 18pt
   let nested-list-spacing = 12pt
   set enum(indent: list-spacing, spacing: list-spacing)
@@ -678,7 +677,6 @@
   }
 
   // -- Outlines --
-
   // Display outlines (table of content, table of figures, etc...)
   context {
     // Helper to target figure kinds
@@ -754,12 +752,15 @@
 
     // Remaining outlines are all optional
     if figure-index {
+      pagebreak(weak: true)
       outline(title: "List of Figures", target: fig-t(image))
     }
     if table-index {
+      pagebreak(weak: true)
       outline(title: "List of Tables", target: fig-t(table))
     }
     if listing-index {
+      pagebreak(weak: true)
       outline(title: "List of Listings", target: fig-t(raw))
     }
     // TODO: Add (optional) outline for definitions, when upstream issue is fixed:
@@ -804,5 +805,5 @@
   appendix
 
   // Display back page
-  backpage()
+  // backpage()
 }

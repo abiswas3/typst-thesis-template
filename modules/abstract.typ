@@ -1,9 +1,8 @@
 #let abstract-page(body) = {
-  pagebreak(weak: true, to: "even")
-  // --- Abstract ---
+
+  pagebreak(weak: true)
   align(left)[
     = Abstract
-    #v(1em)
     #body
   ]
 }

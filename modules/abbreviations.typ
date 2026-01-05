@@ -9,6 +9,7 @@
 
 #let abbreviations-page(abbreviations) = {
   // --- List of Abbreviations ---
+  pagebreak(weak: true)
   align(left)[
     = List of Abbreviations
     #v(1em)

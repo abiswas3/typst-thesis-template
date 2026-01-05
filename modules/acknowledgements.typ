@@ -1,10 +1,10 @@
 #let acknowledgements-page(body) = {
-  pagebreak(weak: true, to: "even")
+  pagebreak(weak: true)
 
   // --- Acknowledgements ---
   align(left)[
     = Acknowledgements
-    #v(1em)
+    // #v(1em)
     #body
   ]
 }
