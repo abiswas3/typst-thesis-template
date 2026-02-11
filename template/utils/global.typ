@@ -27,3 +27,17 @@
 
 #import "@preview/glossarium:0.5.9": gls, glspl, make-glossary, print-glossary
 #import "@preview/codly:1.3.0": *
+
+// When a chapter file is opened standalone (e.g. by the LSP), there is no
+// bibliography in scope so @citations can't resolve.  This helper loads the
+// bibliography only when one hasn't already been provided by the main document.
+#let load-bib(main: false) = {
+  counter("bibs").step()
+  context if main {
+    [#bibliography("../refs.bib") <main-bib>]
+  } else if query(<main-bib>) == () and counter("bibs").get().first() == 1 {
+    bibliography("../refs.bib")
+  }
+}
+
+#load-bib()

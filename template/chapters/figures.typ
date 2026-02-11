@@ -4,6 +4,7 @@
 #import "../utils/subfigure.typ": subfigure
 #import "../utils/todo.typ": TODO
 
+
 This chapter will demonstrate how to insert, manipulate and reference figures of various types. The functionality offered by typst to work with figures is powerful and relatively intuitive, especially if you're coming from #LaTeX. However, this template also features a few additional lightweight packages to further simplify working with figures.
 
 == Images <subsec:images>
@@ -89,6 +90,8 @@ While @tab:default_styling is a very simple table with no extra styling, @tab:ro
 On a page break, we might want a large table to break and continue on the subsequent page.
 As this is not the default behavior, we need to allow it with a `show` rule.
 If a table header and/or footer is set, like in @tab:break, these will repeat on both pages by default.
+
+This
 
 #[
   #show figure: set block(breakable: true)
@@ -286,6 +289,27 @@ Using the custom macro `csv-table` it is possible to include data dynamically fo
 Typst has great built-in support for mathematical equations and this template applies numbering to them by default, so that we can refer to @equ:simple-equation just like we would a figure.
 
 $ sum_(k=1)^n k = (n(n+1)) / 2 $ <equ:simple-equation>
+
+But what about multi-line equations?
+
+$
+sum_(k=1)^n k = (n(n+1)) / 2  #<equ:simple-equation1> \
+sum_(k=1)^n k = (n(n+1)) / 2  #<equ:simple-equation2>
+$
+
+The dot product of two vectors $arrow(a)$ and $arrow(b)$ can
+be calculated as shown in @dot-product.
+
+$
+  chevron.l a, b chevron.r &= arrow(a) dot arrow(b) \
+                       &= a_1 b_1 + a_2 b_2 + ... a_n b_n \
+                       &= sum_(i=1)^n a_i b_i. #<sum>
+$ <dot-product>
+
+The sum notation in is a @sum way to express the dot
+product of two vectors. @dot-product
+
+
 
 By default, we can use powerful symbols and functions inside equation blocks (`$ ... $`) to typeset quite advanced equations. For instance, `#attach()` grants us fine control over symbol placement, like in @equ:attach.
 

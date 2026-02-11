@@ -1,6 +1,6 @@
 // TeX and LaTeX logos
 #let TeX = {
-  set text(font: "New Computer Modern", weight: "regular")
+  set text(font: "Libertinus Serif", weight: "regular")
   box(
     width: 1.7em,
     {
@@ -12,7 +12,7 @@
 }
 
 #let LaTeX = {
-  set text(font: "New Computer Modern", weight: "regular")
+  set text(font: "Libertinus Serif", weight: "regular")
   box(
     width: 2.55em,
     {
@@ -24,7 +24,7 @@
 }
 
 #let BibTeX = {
-  set text(font: "New Computer Modern", weight: "regular")
+  set text(font: "Libertinus Serif", weight: "regular")
   box(
     width: 3.4em,
     {

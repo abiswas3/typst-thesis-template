@@ -8,8 +8,22 @@ This chapter will go over the template structure and its basic usage. Users shou
 As opposed to lightweight and uncomplicated report templates you may be familiar with if you have used typst or #LaTeX before, this template has a slightly more involved _file structure_. Instead of writing all content in one large `thesis.typ` file, each chapter is written into its own file and imported in `thesis.typ` instead. These chapters are placed in their own directory.
 
 @fig:file_structure shows a tree view of the default file structure of this template. In addition to the `chapters` directory, there is also one for figures. Here you can neatly store all your `.svg`, `.png` or `.jpg` files and reference them in the chapters. Alternatively, some students might prefer to organize further with a directory for each chapter for both typst content and figures, when their thesis grows in size.
+Just wonderful.
+
+#cite(<QayyumY-sac2022>, form: "author")
+
+maybe works do this @biswas2026interactive .
+
+Was done in this work #cite(<biswas2026interactive>, form: "prose")
+
+#cite(<biswas2026interactive>, form: "author") did what?
 
 Another important file to note is `refs.bib`. This is where you put your #BibTeX entries that will produce your bibliography, just like you are used to when working with #LaTeX.
+
+This is live and it is absolutely fantastic -- I wish the Neovim plugin held up :(:)
+It did my son -- it did hold up. Neovim is back -- there were too many tiny mist things open and that seemed to be the problem.
+
+== Another header.
 
 #[
   #figure(caption: [File structure tree view])[

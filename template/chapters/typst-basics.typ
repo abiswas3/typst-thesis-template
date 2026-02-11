@@ -12,6 +12,7 @@ We can also create sections of various depths.
 ==== Super deep heading <subsubsubsec:superdeep>
 @subsubsubsec:superdeep is an example of heading of depth 4. Note that we can also easily give headings labels and reference them anywhere in the document: We can for instance refer to @chp:introduction from here. The same applies to any kind of figure. We should also mention that the prefix in for instance `<subsec:headings>` is only a suggestion to keep your labels organized, you can call it whatever you want.
 
+
 == Lists <subsec:lists>
 As with headings, typst has syntactic sugar for lists so that we can use simple markdown-like syntax to create them. This goes for both ordered lists:
 - One list item
@@ -34,3 +35,4 @@ For further reference, the typst official library reference, tutorial and guides
 #pagebreak(weak: true)
 == Citing References <subsec:citing>
 We can cite references defined in our bibliography file easily @QayyumY-sac2022. Once a reference is cited, it will appear in the bibliography at the end of the thesis.
+

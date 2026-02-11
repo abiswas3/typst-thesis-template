@@ -8,11 +8,12 @@
 #import "@preview/codly:1.3.0": *
 
 #let epigraph = [
-  "The problem with object-oriented languages is they’ve got all this implicit \
-  environment that they carry around with them. You wanted a banana but \
-  what you got was a gorilla holding the banana and the entire jungle." \
-  --- Joe Armstrong
-]
+  “We can know only that we know nothing. \
+  And that is the highest degree of human wisdom.”\
+  ― Leo Tolstoy, War and Peace \ \
+  "But eyes are blind. You have to look with the heart.”\
+  ― Antoine de Saint-Exupéry, The Little Prince
+ ]
 
 #let abstract = [#lorem(150)]
 #let acknowledgements = [#lorem(150)]
@@ -98,6 +99,11 @@
   ),
 )
 
+#import "@preview/equate:0.3.2": equate
+// NOTE: equate enables per-line numbering in multi-line equations.
+// Without this show rule, #<label> inside equations renders as raw text
+// and multi-line blocks get a single number instead of (1.1a), (1.1b), etc.
+#show: equate.with(breakable: true, sub-numbering: true)
 // If you wish to use lining figures rather than old-style figures, uncomment this line.
 // #set text(number-type: "lining")
 
@@ -124,3 +130,5 @@
 
 = Utilities <chp:utilities>
 #include "./template/chapters/utilities.typ"
+
+I cannot believe this.

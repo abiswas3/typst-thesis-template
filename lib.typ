@@ -32,7 +32,7 @@
 // Colors used across the template.
 #let stroke-color = luma(200)
 #let fill-color = luma(250)
-#let uit-teal-color = rgb("#0095b6")
+#let uit-teal-color = rgb("#1e3a8a")
 #let uit-light-teal-color = rgb("#e6f7fc")
 #let uit-gray-color = rgb("#48545e")
 
@@ -40,7 +40,8 @@
 #let fill-line(left-text, right-text) = [#left-text #h(1fr) #right-text]
 
 // Definition and Theorems
-#let theorem = thmbox("theorem", "Theorem", fill: uit-light-teal-color)
+// TODO: colors change here
+#let theorem = thmbox("theorem", "Theorem", fill: uit-teal-color.transparentize(80%))
 #let corollary = thmplain(
   "corollary",
   "Corollary",
@@ -165,16 +166,25 @@
   )
   counter(page).update(0)
   set heading(numbering: none)
+  show heading: it => {
+  set text(fill: rgb("#1e3a8a"))
+  it  // Returns the heading with the blue color applied
+}
   show heading.where(level: 1): it => {
     it
     v(6%, weak: true)
+  }
+
+  show heading.where(level: 2): it => {
+    it
+    v(2%, weak: true)
   }
   body
 }
 
 // Common styles for main matter
 #let main-matter(body) = {
-  set text(font: "New Computer Modern", size: 12pt)
+  set text(font: "Libertinus Serif", size: 11pt)
   set page(
     numbering: "1",
     // Only show numbering in footer when no chapter header is present
@@ -293,7 +303,7 @@
   //   v(12%, weak: true)
   // }
   // set par(leading: 1.3em)
-  let leading = 1.5em
+  let leading = 2em
   let leading = leading - 0.75em // "Normalization"
   set block(spacing: leading)
   set par(spacing: leading)
@@ -442,12 +452,12 @@
   // Configure page size and margins.
   set page(
     paper: "a4",
-    // margin: (
-    //   bottom: 5cm,
-    //   top: 42mm,
-    //   inside: 33.0mm,
-    //   outside: 45mm,
-    // ),
+    margin: (
+      bottom: 4cm,
+      top: 32mm,
+      left: 35.0mm,
+      right: 35mm,
+    ),
     numbering: "1",
     number-align: center,
   )
@@ -544,10 +554,18 @@
   // -- Equations --
 
   // Configure equation numbering.
-  set math.equation(numbering: n => {
-    // set text(font: ("XCharter", "Charter"))
+  // NOTE: Uses variadic args (..nums) instead of a single `n` because the
+  // equate package passes two numbers (main-number, sub-number) when
+  // sub-numbering is enabled. A single-arg function would cause an
+  // "unexpected argument" error. Format: (chapter.eq) or (chapter.eq_a).
+  set math.equation(numbering: (..nums) => {
     let h1 = counter(heading).get().first()
-    numbering("(1.1)", h1, n)
+    let n = nums.pos()
+    if n.len() >= 2 {
+      numbering("(1.1a)", h1, ..n)
+    } else {
+      numbering("(1.1)", h1, ..n)
+    }
   })
 
   show math.equation.where(block: true): it => {
@@ -609,6 +627,13 @@
       )))
     }
   }
+
+  // Coloured links, citations, refs, and footnotes
+  show link: underline
+  show link: set text(rgb("#1e66f5").darken(20%), weight: "semibold")
+  show cite: set text(fill: rgb("#1e66f5").darken(15%), weight: "medium")
+  show footnote.entry: set text(fill: rgb("#282828"))
+  show ref: set text(fill: rgb("#006633"), weight: "bold")
 
   // -- Definitions and Theorems --
   show: thmrules.with(qed-symbol: $qed$)

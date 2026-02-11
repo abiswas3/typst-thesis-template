@@ -43,21 +43,22 @@ align(center)[
 
 
   #text(size: 18pt, weight: "bold")[
-    Secure Verifiable Computation In The Modern World
+    Secure And Verifiable Computation In The Modern World
+  ]
+
+#text(size: 12pt)[by]\
+\
+#text(size: 16pt, weight: "bold")[Ari Biswas]
+
+#set par(leading: 1.3em)
+#text(size: 13pt)[A thesis submitted to the University of Warwick \ in partial fulfilment of the requirements \ for admission to the degree of \
+  *Doctor of Philosophy*]
+
+
+#text(size: 16pt, weight: "bold")[ Department of Computer Science
   ]
 
 
-  Ari
-
-
-  A thesis submitted in support of the degree of
-  *Doctor of Philosophy in Computer Science*
-
-
-  Department of Computer Science
-  University of Warwick
-
-
-  March 2024
+  #text(size: 14pt)[#datetime.today().display("[month repr:long] [year repr:full]")]
 ]
 }

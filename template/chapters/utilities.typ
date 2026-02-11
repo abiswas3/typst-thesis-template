@@ -13,7 +13,7 @@ Two functions are available for inserting temporary comments into the document t
 
 #TODO()[The `#TODO()` function is handy for inserting comments to your future self about your thesis. It has a default yellow color to make it easily visible and prevent you from overseeing it when reviewing the document.]
 #TODO(
-  color: red,
+  color: blue.transparentize(75%),
   title: "FIXME",
 )[Alternatively, you can also pass in another color and/or title to distinguish different types of notes from one another]
 
