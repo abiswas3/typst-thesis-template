@@ -1,26 +1,16 @@
 [package]
-name = "modern-uit-thesis"
+name = "warwick-thesis"
 version = "0.1.7"
 compiler = "0.14.2"
-entrypoint = "lib.typ"
-authors = ["Moritz Jörg <@mrtz-j>", "Ole Tytlandsvik <@otytlandsvik>"]
+entrypoint = "demo.typ"
+authors = ["Ari Biswas <tcs@randomwalks.xyz>"]
 license = "MIT"
-description = "A Modern Thesis Template in Typst."
-repository = "https://github.com/mrtz-j/typst-thesis-template"
-keywords = ["thesis", "master", "uit", "bachelor", "university"]
+description = "A Typst thesis template for the University of Warwick."
+repository = "https://github.com/abiswas3/typst-thesis-template"
+keywords = ["thesis", "warwick", "phd", "university"]
 categories = ["thesis"]
 exclude = [
 ".git",
 ".gitignore",
-".github",
-"nix",
-"flake.nix",
-"flake.lock",
-"garnix.yaml",
 "**/*.pdf",
 ]
-
-[template]
-path = "template"
-entrypoint = "thesis.typ"
-thumbnail = "thumbnail.png"

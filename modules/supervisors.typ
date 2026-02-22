@@ -23,9 +23,10 @@
       #align(center)[
         #par(spacing: .75em)[
           #text(size: 9pt)[
-            This document was typeset with Typst using the _modern UiT thesis_ template \
-            #sym.copyright 2025 -- Moritz Jörg and Ole Tytlandsvik \
-            #link("https://github.com/mrtz-j/typst-thesis-template")
+            This document was typeset with Typst using a fork of the _modern UiT thesis_ template \
+            by Moritz Jörg and Ole Tytlandsvik, adapted for the University of Warwick.\
+            #sym.copyright 2026 -- Ari \
+            #link("https://github.com/abiswas3/typst-thesis-template")
           ]
         ]
       ]

@@ -19,7 +19,7 @@
 #let acknowledgements = [#lorem(150)]
 #let appendix = [
   = Appendices
-  #include "./template/chapters/appendix.typ"
+  #include "./chapters/appendix.typ"
 ]
 
 // Put your abbreviations/acronyms here.
@@ -50,7 +50,7 @@
 )
 
 #show: thesis.with(
-  author: "<author>",
+  author: "Ari Biswas",
   title: "<title>",
   degree: "<degree>",
   faculty: "<faculty>",
@@ -58,17 +58,11 @@
   major: "<major>",
   supervisors: (
     (
-      title: "Main Supervisor",
-      name: "Navn Navnesen",
-      affiliation: [UiT The Arctic University of Norway, \
-        Faculty of Science and Technology, \
-        Department of Computer Science
+      title: "Supervisor",
+      name: "Graham Cormode",
+      affiliation: [Professor, University of Warwick \
+        and University of Oxford
       ],
-    ),
-    (
-      title: "External Supervisor",
-      name: "Kari Nordmann",
-      affiliation: [External Company A/S],
     ),
   ),
   epigraph: epigraph,
@@ -81,7 +75,7 @@
   listing-index: true,
   abbreviations: abbreviations,
   date: datetime(year: 2025, month: 6, day: 1),
-  bibliography: bibliography("./template/refs.bib", title: "Bibliography", style: "ieee"),
+  bibliography: bibliography("./refs.bib", title: "Bibliography", style: "ieee"),
 )
 
 // Code blocks
@@ -110,25 +104,25 @@
 // Include as many chapters as you like.
 
 = Introduction <chp:introduction>
-#include "./template/chapters/introduction.typ"
+#include "./chapters/introduction.typ"
 // NOTE:
 // It's important to have explicit pagebreaks between each chapter,
 // otherwise header stylings from the template might break
 #pagebreak()
 
 = Basic Usage <chp:basic_usage>
-#include "./template/chapters/basic-usage.typ"
+#include "./chapters/basic-usage.typ"
 #pagebreak()
 
 = Figures <chp:figures>
-#include "./template/chapters/figures.typ"
+#include "./chapters/figures.typ"
 #pagebreak()
 
 = Typst Basics <chp:typst_basics>
-#include "./template/chapters/typst-basics.typ"
+#include "./chapters/typst-basics.typ"
 #pagebreak()
 
 = Utilities <chp:utilities>
-#include "./template/chapters/utilities.typ"
+#include "./chapters/utilities.typ"
 
 I cannot believe this.

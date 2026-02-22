@@ -1,7 +1,7 @@
-// Modern UiT Thesis Template
+// University of Warwick Thesis Template
 //
-// This is a modern thesis template for UiT The Arctic University of Norway.
-// Requires parameters set in the `thesis.typ` file.
+// A Typst thesis template for the University of Warwick.
+// Requires parameters set in the `demo.typ` file.
 //
 
 #import "@preview/subpar:0.2.2"
@@ -32,16 +32,16 @@
 // Colors used across the template.
 #let stroke-color = luma(200)
 #let fill-color = luma(250)
-#let uit-teal-color = rgb("#1e3a8a")
-#let uit-light-teal-color = rgb("#e6f7fc")
-#let uit-gray-color = rgb("#48545e")
+#let warwick-teal-color = rgb("#1e3a8a")
+#let warwick-light-teal-color = rgb("#e6f7fc")
+#let warwick-gray-color = rgb("#48545e")
 
 // Helper to display two pieces of content with space between.
 #let fill-line(left-text, right-text) = [#left-text #h(1fr) #right-text]
 
 // Definition and Theorems
 // TODO: colors change here
-#let theorem = thmbox("theorem", "Theorem", fill: uit-teal-color.transparentize(80%))
+#let theorem = thmbox("theorem", "Theorem", fill: warwick-teal-color.transparentize(80%))
 #let corollary = thmplain(
   "corollary",
   "Corollary",
@@ -52,7 +52,7 @@
   x: 1.2em,
   top: 1em,
 ))
-#let lemma = thmbox("lemma", "Lemma", fill: uit-gray-color.lighten(80%))
+#let lemma = thmbox("lemma", "Lemma", fill: warwick-gray-color.lighten(80%))
 #let example = thmplain("example", "Example").with(numbering: none)
 // Disable numbering of equations inside a proof block
 #let custom-proof-bodyfmt(body) = {
@@ -117,7 +117,7 @@
           weight: "thin",
           // font: ("Open Sans", "Noto Sans"),
           size: 8pt,
-          fill: uit-gray-color,
+          fill: warwick-gray-color,
           counter(page).display(),
         ))
       // } else {
@@ -158,7 +158,7 @@
           weight: "thin",
           // font: ("Open Sans", "Noto Sans"),
           size: 8pt,
-          fill: uit-gray-color,
+          fill: warwick-gray-color,
           fill-line(left-text, right-text),
         )
       }
@@ -193,7 +193,7 @@
         align(center, text(
           // weight: "thin",
           size: 8pt,
-          fill: uit-gray-color,
+          fill: warwick-gray-color,
           counter(page).display(),
         ))
     },
@@ -245,7 +245,7 @@
     //       }
     //     }
     //
-    //     let colored-slash = text(fill: uit-teal-color, "/")
+    //     let colored-slash = text(fill: warwick-teal-color, "/")
     //     let spacing = h(3pt)
     //
     //     // Content to display subsection count and heading
@@ -288,7 +288,7 @@
     //     //     weight: "thin",
     //     //     // font: ("Open Sans", "Noto Sans"),
     //     //     size: 8pt,
-    //     //     fill: uit-gray-color,
+    //     //     fill: warwick-gray-color,
     //     //     fill-line(upper(left-text), upper(right-text)),
     //     //   )
     //     // }
@@ -335,8 +335,7 @@
     (
       title: "Your Supervisor",
       name: "Supervisor Name",
-      affiliation: [UiT The Arctic University of Norway, \
-        Faculty of Science and Technology, \
+      affiliation: [University of Warwick, \
         Department of Computer Science],
     )
   ),
@@ -524,8 +523,8 @@
       stack(
         dir: ltr,
         move(dy: 54pt, polygon(
-          fill: uit-teal-color,
-          stroke: uit-teal-color,
+          fill: warwick-teal-color,
+          stroke: warwick-teal-color,
           (0pt, 0pt),
           (5pt, 0pt),
           (40pt, -90pt),
