@@ -8,7 +8,8 @@
 #import "@preview/physica:0.9.7": *
 #import "@preview/glossarium:0.5.9": make-glossary, register-glossary
 #import "@preview/codly:1.3.0": *
-#import "@preview/ctheorems:1.1.3": *
+#import "@local/random-walks:0.4.1": *
+#import cosmos.clouds: *
 
 #import "modules/frontpage.typ": frontpage
 #import "modules/backpage.typ": backpage
@@ -39,29 +40,8 @@
 // Helper to display two pieces of content with space between.
 #let fill-line(left-text, right-text) = [#left-text #h(1fr) #right-text]
 
-// Definition and Theorems
-// TODO: colors change here
-#let theorem = thmbox("theorem", "Theorem", fill: warwick-teal-color.transparentize(80%))
-#let corollary = thmplain(
-  "corollary",
-  "Corollary",
-  base: "theorem",
-  titlefmt: strong,
-)
-#let definition = thmbox("definition", "Definition", inset: (
-  x: 1.2em,
-  top: 1em,
-))
-#let lemma = thmbox("lemma", "Lemma", fill: warwick-gray-color.lighten(80%))
-#let example = thmplain("example", "Example").with(numbering: none)
-// Disable numbering of equations inside a proof block
-#let custom-proof-bodyfmt(body) = {
-  set math.equation(numbering: none)
-  proof-bodyfmt(body)
-}
-#let proof = thmproof("proof", "Proof", bodyfmt: custom-proof-bodyfmt).with(
-  numbering: none,
-)
+// Theorem environments provided by cosmos.clouds via random-walks import
+// (theorem, lemma, corollary, definition, proposition, etc.)
 
 // Helper to display external codeblocks.
 // Based on https://github.com/typst/typst/issues/1494
@@ -94,6 +74,12 @@
     ..data,
   )
 }
+
+// Optional publication note for chapter pages (cumulative thesis)
+// Usage: #chapter-pub[This chapter is based on @biswas2026interactive. The results were first presented at ITCS 2026.]
+// Place this right before the `= Chapter Heading`
+#let _chapter-pub-state = state("chapter-pub", none)
+#let chapter-pub(body) = _chapter-pub-state.update(body)
 
 // `in-appendix` is for custom styling in the appendix section
 #let in-appendix = state("in-appendix", false)
@@ -501,25 +487,21 @@
     state("content.switch").update(true)
     // set text(font: ("Open Sans", "Noto Sans"), weight: "bold", size: 24pt)
 
-    let heading-number = if heading.numbering == none {
-      []
-    } else {
-      text(
-        counter(heading.where(level: 1)).display(),
-        number-type: "lining",
-        size: 62pt,
-      )
-    }
-
     // Reset figure numbering on every chapter start
     for kind in (image, table, raw) {
       counter(figure.where(kind: kind)).update(0)
-      // Also reset equation numbering
       counter(math.equation).update(0)
     }
 
-    v(26%)
+    v(0%)
     if heading.numbering != none {
+      let heading-number = text(
+        counter(heading.where(level: 1)).display(),
+        number-type: "lining",
+        size: 62pt,
+        weight: "bold",
+        fill: warwick-teal-color,
+      )
       stack(
         dir: ltr,
         move(dy: 54pt, polygon(
@@ -533,10 +515,27 @@
         heading-number,
       )
       v(1.0em)
-      it.body
-      v(-1.5em)
+      text(size: 20pt, weight: "bold", fill: warwick-teal-color)[#it.body]
+      // Check for a chapter-pub note
+      context {
+        let pub-ref = _chapter-pub-state.get()
+        if pub-ref != none {
+          v(0.8em)
+          block(
+            width: 100%,
+            inset: 1em,
+            radius: 0.4em,
+            fill: rgb("#1C4882").lighten(92%),
+          )[
+            #set text(size: 9pt, fill: warwick-gray-color)
+            #pub-ref
+          ]
+          _chapter-pub-state.update(none)
+        }
+      }
+      v(0.5em)
     } else {
-      it.body
+      text(size: 20pt, weight: "bold", fill: warwick-teal-color)[#it.body]
     }
   }
 
@@ -627,17 +626,18 @@
     }
   }
 
-  // Coloured links, citations, refs, and footnotes
+  // Coloured links, citations, refs, and footnotes (matched to random-walks/paper-setup)
   show link: underline
-  show link: set text(rgb("#1e66f5").darken(20%), weight: "semibold")
-  show cite: set text(fill: rgb("#1e66f5").darken(15%), weight: "medium")
+  show link: set text(rgb("#006FA6"), weight: "semibold")
+  show cite: set text(fill: rgb("#006FA6").lighten(10%), weight: "medium", size: 0.92em)
   show footnote.entry: set text(fill: rgb("#282828"))
-  show ref: set text(fill: rgb("#006633"), weight: "bold")
+  show ref: set text(fill: rgb("#0369a1"), weight: "bold")
 
-  // -- Definitions and Theorems --
-  show: thmrules.with(qed-symbol: $qed$)
+  // -- Theorem environments (cosmos.clouds) --
+  show: show-theorion
 
   // -- Lists --
+  set list(marker: text(fill: rgb("#1C4882"), size: 0.45em)[#sym.circle.filled])
   let list-spacing = 18pt
   let nested-list-spacing = 12pt
   set enum(indent: list-spacing, spacing: list-spacing)

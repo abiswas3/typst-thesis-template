@@ -103,6 +103,7 @@
 
 // Include as many chapters as you like.
 
+#chapter-pub[This chapter is based on @biswas2026interactive, first presented at the 17th Innovations in Theoretical Computer Science Conference (ITCS 2026). The exposition here has been expanded with additional examples and a simplified proof of the main theorem.]
 = Introduction <chp:introduction>
 #include "./chapters/introduction.typ"
 // NOTE:
