@@ -40,6 +40,43 @@
 // Helper to display two pieces of content with space between.
 #let fill-line(left-text, right-text) = [#left-text #h(1fr) #right-text]
 
+// Publication info box for paper-based chapters.
+// Shown on the chapter's title page, before the paper's sections.
+#let paper-info(
+  title: none,
+  authors: (),
+  venue: none,
+  year: none,
+  doi: none,
+  note: none,
+) = block(
+  width: 100%,
+  inset: 1.2em,
+  radius: 4pt,
+  fill: fill-color,
+  stroke: 0.5pt + stroke-color,
+  {
+    text(size: 0.9em, smallcaps[This chapter is based on the following publication:])
+    v(0.6em)
+    text(weight: "bold", title)
+    linebreak()
+    authors.join(", ", last: " and ")
+    if venue != none {
+      linebreak()
+      emph(venue)
+      if year != none [, #year]
+    }
+    if doi != none {
+      linebreak()
+      [DOI: #link("https://doi.org/" + doi, doi)]
+    }
+    if note != none {
+      linebreak()
+      text(size: 0.9em, note)
+    }
+  },
+)
+
 // Theorem environments provided by cosmos.clouds via random-walks import
 // (theorem, lemma, corollary, definition, proposition, etc.)
 
@@ -87,6 +124,38 @@
 // The `in-outline` mechanism is for showing a short caption in the list of figures
 // See https://sitandr.github.io/typst-examples-book/book/snippets/chapters/outlines.html#long-and-short-captions-for-the-outline
 #let in-outline = state("in-outline", false)
+
+// Truncate caption content to its first sentence, so long figure captions
+// don't flood the List of Figures. Walks the content tree and cuts at the
+// first '.' followed by whitespace (or end of text).
+#let caption-first-sentence(body) = {
+  let trunc(s) = {
+    let m = s.match(regex("\.(\s|$)"))
+    if m != none { (true, s.slice(0, m.start + 1)) } else { (false, s) }
+  }
+  let rec(it) = {
+    if type(it) == str {
+      trunc(it)
+    } else if type(it) != content {
+      (false, it)
+    } else if it.func() == text {
+      let (done, out) = trunc(it.text)
+      (done, out)
+    } else if it.has("children") {
+      let out = ()
+      let done = false
+      for child in it.children {
+        let (d, o) = rec(child)
+        out.push(o)
+        if d { done = true; break }
+      }
+      (done, out.join())
+    } else {
+      (false, it)
+    }
+  }
+  rec(body).at(1)
+}
 
 // -- Styling rules for Front-Main-Back matter --
 
@@ -300,6 +369,8 @@
 // Common styles for back matter
 #let back-matter(body) = {
   set heading(numbering: "A.1.1", supplement: [Appendix])
+  // Override the main-matter per-level supplement show-set rule
+  show heading.where(level: 1): set heading(supplement: [Appendix])
   // Make sure headings start with 'A'
   counter(heading.where(level: 1)).update(0)
   counter(heading).update(0)
@@ -450,18 +521,14 @@
   // Configure paragraph properties.
   set par(justify: true, linebreaks: "optimized", spacing: 2em)
 
-  // Configure reference supplement for headings
-  set ref(supplement: it => context {
-    if it.func() == heading {
-      if in-appendix.get() {
-        [Appendix]
-      } else {
-        [Chapter]
-      }
-    } else {
-      it.supplement
-    }
-  })
+  // Configure reference supplement for headings: level 1 is a chapter,
+  // anything deeper is a section.
+  // NOTE: set as plain content on the heading element (not via
+  // `set ref(supplement: <function>)`), because the theorion ref show rule in
+  // random-walks reads `it.supplement` verbatim and crashes on function
+  // supplements. The appendix overrides this with [Appendix] in back-matter.
+  set heading(supplement: [Section])
+  show heading.where(level: 1): set heading(supplement: [Chapter])
 
   // Add some vertical spacing for all headings
   show heading: it => {
@@ -762,11 +829,19 @@
         set text(weight: "bold")
         it.prefix()
       }
+      // Show only the first sentence of the caption in the figure/table/listing lists
+      let body = if (
+        it.element.func() == figure and it.element.caption != none
+      ) {
+        caption-first-sentence(it.element.caption.body)
+      } else {
+        it.body()
+      }
       // Calculate relative spacing, to line up fill regardless of page number width
       let page-number-spacing = entry-spacing-right - measure(it.page()).width
       link(it.element.location(), it.indented(
         prefix + h(entry-spacing-left),
-        it.body()
+        body
           + h(entry-spacing-left)
           + box(width: 1fr, it.fill)
           + h(page-number-spacing)

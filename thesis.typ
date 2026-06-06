@@ -101,29 +101,14 @@
 // If you wish to use lining figures rather than old-style figures, uncomment this line.
 // #set text(number-type: "lining")
 
-// Include as many chapters as you like.
+// Chapters, in reading order. Each paper-chapter is a self-contained folder;
+// copy chapters/_paper-skeleton/ to start a new one.
+// (Template usage examples live in docs/.)
 
-#chapter-pub[This chapter is based on @biswas2026interactive, first presented at the 17th Innovations in Theoretical Computer Science Conference (ITCS 2026). The exposition here has been expanded with additional examples and a simplified proof of the main theorem.]
-= Introduction <chp:introduction>
-#include "./chapters/introduction.typ"
-// NOTE:
-// It's important to have explicit pagebreaks between each chapter,
-// otherwise header stylings from the template might break
+#include "./chapters/00-introduction/main.typ"
 #pagebreak()
 
-= Basic Usage <chp:basic_usage>
-#include "./chapters/basic-usage.typ"
+#include "./chapters/01-dp-hhh/main.typ"
 #pagebreak()
 
-= Figures <chp:figures>
-#include "./chapters/figures.typ"
-#pagebreak()
-
-= Typst Basics <chp:typst_basics>
-#include "./chapters/typst-basics.typ"
-#pagebreak()
-
-= Utilities <chp:utilities>
-#include "./chapters/utilities.typ"
-
-I cannot believe this.
+#include "./chapters/99-conclusion/main.typ"
